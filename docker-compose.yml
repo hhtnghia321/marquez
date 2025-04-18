@@ -18,6 +18,8 @@ services:
       - "db:postgres"
     depends_on:
       - db
+    networks:
+      - network_test
     entrypoint: ["/opt/marquez/wait-for-it.sh", "db:${POSTGRES_PORT}", "--", "./entrypoint.sh"]
 
   db:
@@ -36,8 +38,11 @@ services:
       - db-init:/docker-entrypoint-initdb.d
       - db-backup:/var/lib/postgresql/data
     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+    networks:
+      - network_test
     # Enables SQL statement logging (see: https://www.postgresql.org/docs/12/runtime-config-logging.html#GUC-LOG-STATEMENT)
     # command: ["postgres", "-c", "log_statement=all"]
+    
 
 volumes:
   data:
