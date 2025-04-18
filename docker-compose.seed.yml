@@ -16,3 +16,7 @@ services:
     depends_on:
       - api
     entrypoint: ["./wait-for-it.sh", "api:${API_PORT}", "--timeout=120", "--", "./seed.sh"]
+networks:
+  network_test:
+    name: network_test
+    external: true
