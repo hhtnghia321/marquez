@@ -17,3 +17,7 @@ services:
       - "${WEB_PORT}:${WEB_PORT}"
     depends_on:
       - api
+networks:
+  network_test:
+    name: network_test
+    external: true
