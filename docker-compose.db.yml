@@ -13,6 +13,8 @@ services:
       - MARQUEZ_PASSWORD=marquez
     volumes:
       - ./docker/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    networks:
+      - network_test
 networks:
   network_test:
     name: network_test
