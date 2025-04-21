@@ -37,13 +37,12 @@ services:
       - network_test
     healthcheck:
       test: >
-        CMD sh -c '
-        curl -s http://marquez-api:5001/healthcheck |
-        jq -e ".deadlocks.healthy == true and .postgresql.healthy == true" > /dev/null
-        '
+        CMD curl -u admin:admin -s http://marquez-search:9200/_cluster/health |
+        jq -e '(.status == "green" or .status == "yellow")'
       interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 30s
 
 volumes:
   opensearch-data:
