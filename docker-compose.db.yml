@@ -16,14 +16,10 @@ services:
     networks:
       - network_test
     healthcheck:
-      test: >
-        CMD sh -c '
-        curl -s http://localhost:5001/healthcheck |
-        jq -e ".postgresql.healthy == true" > /dev/null
-        '
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 networks:
   network_test:
     name: network_test
