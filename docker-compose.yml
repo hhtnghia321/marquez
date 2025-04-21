@@ -21,6 +21,15 @@ services:
     networks:
       - network_test
     entrypoint: ["/opt/marquez/wait-for-it.sh", "db:${POSTGRES_PORT}", "--", "./entrypoint.sh"]
+    healthcheck:
+      test: >
+        CMD sh -c '
+        curl -s http://localhost:5001/healthcheck |
+        jq -e ".deadlocks.healthy == true" > /dev/null
+        '
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   db:
     image: postgres:14
@@ -42,6 +51,15 @@ services:
       - network_test
     # Enables SQL statement logging (see: https://www.postgresql.org/docs/12/runtime-config-logging.html#GUC-LOG-STATEMENT)
     # command: ["postgres", "-c", "log_statement=all"]
+    healthcheck:
+      test: >
+        CMD sh -c '
+        curl -s http://localhost:5001/healthcheck |
+        jq -e ".postgresql.healthy == true" > /dev/null
+        '
+      interval: 30s
+      timeout: 10s
+      retries: 3
     
 
 volumes:
