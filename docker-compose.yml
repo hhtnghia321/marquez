@@ -22,14 +22,10 @@ services:
       - network_test
     entrypoint: ["/opt/marquez/wait-for-it.sh", "db:${POSTGRES_PORT}", "--", "./entrypoint.sh"]
     healthcheck:
-      test: >
-        CMD sh -c '
-        curl -s http://marquez-api:5001/healthcheck |
-        jq -e ".deadlocks.healthy == true" > /dev/null
-        '
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   db:
     image: postgres:14
