@@ -24,7 +24,7 @@ services:
     healthcheck:
       test: >
         CMD sh -c '
-        curl -s http://localhost:5001/healthcheck |
+        curl -s http://marquez-api:5001/healthcheck |
         jq -e ".deadlocks.healthy == true" > /dev/null
         '
       interval: 30s
@@ -54,7 +54,7 @@ services:
     healthcheck:
       test: >
         CMD sh -c '
-        curl -s http://localhost:5001/healthcheck |
+        curl -s http://marquez-api:5001/healthcheck |
         jq -e ".postgresql.healthy == true" > /dev/null
         '
       interval: 30s
