@@ -35,6 +35,15 @@ services:
       - "9300:9300"
     networks:
       - network_test
+    healthcheck:
+      test: >
+        CMD sh -c '
+        curl -s http://localhost:5001/healthcheck |
+        jq -e ".deadlocks.healthy == true and .postgresql.healthy == true" > /dev/null
+        '
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 volumes:
   opensearch-data:
