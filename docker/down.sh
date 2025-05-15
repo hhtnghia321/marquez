@@ -32,7 +32,7 @@ usage() {
 project_root=$(git rev-parse --show-toplevel)
 cd "${project_root}/"
 
-compose_files="-f docker-compose.yml"
+compose_files="-f docker-compose.yml -f docker-compose.web.yml -f docker-compose.search.yml"
 
 # Default args
 compose_args="--remove-orphans"
